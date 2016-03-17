@@ -17,14 +17,22 @@
         {
             apologize("Please enter the stock symbol.");
         }
+        else if ($_POST["shares"]==Null)
+        {
+            apologize("Please enter a number of shares to sell.");
+        }
+        else if (preg_match("/^\d+$/", $_POST["shares"]) == NULL)
+        {
+            apologize("You must enter a positive integer.");
+        }
         
         $stock = lookup($_POST["symbol"]);
-        $shares = CS50::query("SELECT shares FROM Portfolios WHERE user_id = ? AND symbol = ?", $_SESSION["id"], $_POST["symbol"]);
-        $earn = $stock["price"] * $shares[0]["shares"];
+        $earn = $stock["price"] * $_POST["shares"];
         $type = 'Sell';
-        CS50::query("INSERT INTO history (id, type, symbol, shares, price) VALUES (?, ?, ?, ?, ?)", $_SESSION["id"], $type, $_POST["symbol"], $shares[0]["shares"], $stock["price"]);
+        CS50::query("INSERT INTO history (id, type, symbol, shares, price) VALUES (?, ?, ?, ?, ?)", $_SESSION["id"], $type, $_POST["symbol"], $_POST["shares"], $stock["price"]);
         CS50::query("UPDATE users SET cash = cash + ? WHERE id = ?", $earn, $_SESSION["id"]);
-        CS50::query("DELETE FROM Portfolios WHERE user_id = ? AND symbol = ?", $_SESSION["id"], $_POST["symbol"]);        
+        CS50::query("INSERT INTO Portfolios (user_id, symbol, shares) VALUES(?, ?, ?) 
+            ON DUPLICATE KEY UPDATE shares = shares - VALUES(shares)", $_SESSION["id"], $_POST["symbol"], $_POST["shares"]);        
         
         redirect("/");
     }
