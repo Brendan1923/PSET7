@@ -1,7 +1,7 @@
-<table class="table table-striped">
-
+<table class="table table-hover" style="background-color: #ffcccc">
+<body style="background-color:#bfbfbf">
     <thead>
-        <tr>
+        <tr style="background-color: #ff9999">
             <th>Type</th>
             <th>Date and Time</th>
             <th>Symbol</th>
