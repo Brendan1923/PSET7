@@ -26,6 +26,7 @@
         }
         else{
             render("quote.php", ["title" => "Quote", "symbol" => $stock["symbol"], "name" => $stock["name"], "price" => $stock["price"]]);
+            render("quote_buy_form.php", ["symbol" => $_POST["symbol"]]);
         }
         
     }
