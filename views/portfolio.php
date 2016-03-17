@@ -1,17 +1,29 @@
+<body style="background-color:#bfbfbf">
+<div>
 <h1>
     <?php
-    print("Cash: $". number_format($cash, 2));
+    $name= CS50::query("SELECT name FROM users WHERE id = ?", $_SESSION["id"]);
+    $name=$name[0]["name"];
+    print("Hi, ". ($name));
     ?>
 </h1>
+<h2>
+    <?php
+    print("Your cash is: $". number_format($cash, 2));
+    ?>
+</h2>
+
 <h4>
     <?php
     print("Add money to your account");
     ?>
 </h4>
-<table class="table table-striped">
+</div>
+<div>
+<table class="table table-hover" style="background-color: #ffcccc">
     <thead>
         
-        <tr>
+        <tr style="background-color: #ff9999">
             <th>Symbol</th>
             <th>Name</th>
             <th>Shares</th>
@@ -34,13 +46,16 @@
 			print("</tr>");
         }
         ?>
+</div>
+
         <form action="intro.php" method="post">
             <fieldset>
             <div class="form-group">
-                <input class="form-control" name="intro" placeholder="Cash to be introduced" type="text"/>
+                <input class="btn-danger" name="intro" placeholder="Introduce the cash to add" type="text"/>
             </div>
             </fieldset>
         </form>
         
     </tbody>
 </table>
+</body>
